@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vincenzo Schettino — Tourism Consultant</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --forest: #1a4a2e;
+    --sage: #2d6b47;
+    --moss: #3d8a5a;
+    --mist: #c8dfd0;
+    --cream: #f5f0e8;
+    --ink: #0f2018;
+    --gold: #b8965a;
+    --white: #fdfcfa;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 3rem;
+    background: rgba(26,74,46,0.97);
+    backdrop-filter: blur(10px);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 300; color: var(--cream); letter-spacing: 0.08em; text-decoration: none; }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a { font-size: 0.78rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+
+  .hero {
+    min-height: 100vh; background: var(--forest);
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(61,138,90,0.22) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 3rem 6rem 6rem; position: relative; z-index: 2;
+  }
+  .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.8rem; font-weight: 400; }
+  .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem,5vw,5.5rem); font-weight: 300; line-height: 1.05; color: var(--white); margin-bottom: 1rem; }
+  .hero-name em { font-style: italic; color: var(--mist); }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem,2vw,1.5rem); font-weight: 300; color: var(--mist); letter-spacing: 0.04em; margin-bottom: 2.5rem; border-left: 2px solid var(--gold); padding-left: 1rem; }
+  .hero-cta { display: inline-block; padding: 0.85rem 2.2rem; border: 1px solid rgba(200,223,208,0.4); color: var(--cream); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; transition: all 0.3s; width: fit-content; }
+  .hero-cta:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+  .hero-right { position: relative; display: flex; align-items: flex-end; justify-content: center; padding-top: 5rem; }
+  .hero-photo-wrap { width: 65%; max-width: 380px; aspect-ratio: 3/4; position: relative; }
+  .hero-photo-wrap::before { content: ''; position: absolute; inset: -12px -12px 12px 12px; border: 1px solid rgba(184,150,90,0.35); z-index: 0; }
+  .hero-photo-placeholder { width: 100%; height: 100%; background: linear-gradient(160deg, var(--sage) 0%, var(--forest) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--mist); font-size: 0.75rem; letter-spacing: 0.08em; gap: 0.8rem; position: relative; z-index: 1; }
+  .hero-photo-placeholder svg { width: 56px; height: 56px; opacity: 0.4; }
+  .hero-location { position: absolute; bottom: 2.5rem; left: 6rem; color: rgba(200,223,208,0.6); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; }
+
+  section { padding: 7rem 6rem; }
+  .section-label { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; font-weight: 500; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,3.5vw,3rem); font-weight: 300; line-height: 1.15; color: var(--forest); margin-bottom: 2.5rem; }
+  .divider { width: 40px; height: 1px; background: var(--gold); margin-bottom: 2rem; }
+
+  .about { background: var(--white); display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .about-text p { font-size: 1.02rem; line-height: 1.85; color: #2a3a2e; margin-bottom: 1.4rem; font-weight: 300; }
+  .about-image { aspect-ratio: 4/5; background: linear-gradient(140deg, var(--mist) 0%, var(--sage) 100%); position: relative; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 0.75rem; letter-spacing: 0.08em; }
+  .about-image::after { content: 'Photo placeholder'; position: absolute; }
+
+  .services { background: var(--forest); }
+  .services .section-title { color: var(--white); }
+  .services-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5px; margin-top: 3rem; background: rgba(200,223,208,0.1); }
+  .service-card { background: rgba(26,74,46,0.9); padding: 2.5rem 2rem; position: relative; transition: background 0.3s; cursor: default; }
+  .service-card:hover { background: var(--sage); }
+  .service-icon { font-size: 1.8rem; margin-bottom: 1.2rem; display: block; }
+  .service-name { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--white); margin-bottom: 0.8rem; }
+  .service-desc { font-size: 0.82rem; line-height: 1.7; color: var(--mist); font-weight: 300; }
+  .service-number { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 0.6rem; color: var(--gold); letter-spacing: 0.1em; }
+
+  .languages { background: var(--cream); }
+  .languages-wrap { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; }
+  .lang-pill { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 2rem; border: 1px solid rgba(26,74,46,0.2); background: var(--white); transition: all 0.25s; cursor: default; }
+  .lang-pill:hover { border-color: var(--sage); background: var(--sage); }
+  .lang-pill:hover .lang-name { color: var(--white); }
+  .lang-pill:hover .lang-level { color: var(--mist); }
+  .lang-flag { font-size: 1.4rem; }
+  .lang-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: var(--forest); }
+  .lang-level { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(26,74,46,0.5); font-weight: 400; }
+
+  .contact { background: var(--ink); display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+  .contact .section-title { color: var(--white); }
+  .contact-intro { font-size: 1rem; line-height: 1.8; color: rgba(200,223,208,0.7); font-weight: 300; margin-bottom: 2rem; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 400; }
+  .form-group input, .form-group textarea { background: rgba(255,255,255,0.05); border: 1px solid rgba(200,223,208,0.15); color: var(--white); padding: 0.85rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 300; outline: none; transition: border-color 0.2s; resize: none; }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(200,223,208,0.3); }
+  .btn-send { padding: 1rem 2.5rem; background: var(--gold); border: none; color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; font-weight: 500; transition: opacity 0.2s; width: fit-content; margin-top: 0.5rem; }
+  .btn-send:hover { opacity: 0.85; }
+  .contact-detail { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.8rem; }
+  .contact-detail-icon { width: 36px; height: 36px; border: 1px solid rgba(184,150,90,0.4); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+  .contact-detail-text strong { display: block; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.25rem; }
+  .contact-detail-text span { font-size: 0.9rem; color: rgba(200,223,208,0.8); font-weight: 300; }
+
+  footer { background: var(--forest); padding: 2rem 6rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(200,223,208,0.1); }
+  .footer-copy { font-size: 0.72rem; color: rgba(200,223,208,0.4); letter-spacing: 0.08em; }
+  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--mist); letter-spacing: 0.06em; font-style: italic; }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  .hero-eyebrow { animation: fadeUp 0.7s ease 0.1s both; }
+  .hero-name { animation: fadeUp 0.7s ease 0.25s both; }
+  .hero-title { animation: fadeUp 0.7s ease 0.4s both; }
+  .hero-cta { animation: fadeUp 0.7s ease 0.55s both; }
+  .hero-right { animation: fadeUp 0.9s ease 0.3s both; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Vincenzo Schettino</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#languages">Languages</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-eyebrow">Roots &amp; Routes</span>
+    <h1 class="hero-name">Vincenzo<br><em>Schettino</em></h1>
+    <p class="hero-title">Tourism Consultant &amp; Hospitality Strategist</p>
+    <a href="#contact" class="hero-cta">Work with me</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        <span>Your photo here</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-location">
+    <span>Cagliari, Sardinia</span>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="about-text">
+    <p class="section-label">About me</p>
+    <div class="divider"></div>
+    <h2 class="section-title">Where culture<br>meets strategy</h2>
+    <p>With a background in languages and cultural mediation, Vincenzo brings a rare combination of on-the-ground hospitality experience and strategic consulting expertise to the tourism sector.</p>
+    <p>Based in Southern Sardinia, he works with hotels, resorts, and tourism operators to build systems that deliver exceptional guest experiences while improving operational efficiency.</p>
+    <p>Whether guiding international cruise guests along the Sardinian coast or restructuring the operations of a boutique property, Vincenzo's approach is always grounded in cultural intelligence and practical results.</p>
+  </div>
+  <div class="about-image"></div>
+</section>
+
+<section class="services" id="services">
+  <p class="section-label">What I offer</p>
+  <div class="divider"></div>
+  <h2 class="section-title">Services</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-number">01</span>
+      <span class="service-icon">🏨</span>
+      <h3 class="service-name">Operations Consulting</h3>
+      <p class="service-desc">SOPs, staff management, KPI systems, and operational restructuring for hotels and resorts of all sizes.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-number">02</span>
+      <span class="service-icon">🧭</span>
+      <h3 class="service-name">Tour Guiding</h3>
+      <p class="service-desc">Multilingual guided tours across Sardinia and Italy, with a specialisation in cultural and coastal routes.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-number">03</span>
+      <span class="service-icon">📋</span>
+      <h3 class="service-name">Strategy &amp; Planning</h3>
+      <p class="service-desc">Tourism product development, partnership strategy, and positioning for emerging and established destinations.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-number">04</span>
+      <span class="service-icon">🍽️</span>
+      <h3 class="service-name">Food &amp; Hospitality</h3>
+      <p class="service-desc">Culinary tourism concepts, F&amp;B service design, and local supplier integration for authentic guest experiences.</p>
+    </div>
+  </div>
+</section>
+
+<section class="languages" id="languages">
+  <p class="section-label">Communication</p>
+  <div class="divider"></div>
+  <h2 class="section-title">Languages spoken</h2>
+  <div class="languages-wrap">
+    <div class="lang-pill">
+      <span class="lang-flag">🇮🇹</span>
+      <span class="lang-name">Italian</span>
+      <span class="lang-level">Native</span>
+    </div>
+    <div class="lang-pill">
+      <span class="lang-flag">🇬🇧</span>
+      <span class="lang-name">English</span>
+      <span class="lang-level">Fluent</span>
+    </div>
+    <div class="lang-pill">
+      <span class="lang-flag">🇩🇪</span>
+      <span class="lang-name">German</span>
+      <span class="lang-level">Professional</span>
+    </div>
+    <div class="lang-pill">
+      <span class="lang-flag">🇪🇸</span>
+      <span class="lang-name">Spanish</span>
+      <span class="lang-level">Professional</span>
+    </div>
+    <div class="lang-pill">
+      <span class="lang-flag">🇳🇱</span>
+      <span class="lang-name">Dutch</span>
+      <span class="lang-level">Conversational</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-info">
+    <p class="section-label">Get in touch</p>
+    <div class="divider"></div>
+    <h2 class="section-title">Let's work<br>together</h2>
+    <p class="contact-intro">Whether you need a consultant for your property, a multilingual tour escort, or a strategic partner for your tourism project, Vincenzo is available for both short and long-term engagements.</p>
+    <div class="contact-detail">
+      <div class="contact-detail-icon">✉</div>
+      <div class="contact-detail-text">
+        <strong>Email</strong>
+        <span>vincenzo@rootsandroutes.com</span>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <div class="contact-detail-icon">📍</div>
+      <div class="contact-detail-text">
+        <strong>Location</strong>
+        <span>Cagliari, Sardinia — Available across Italy</span>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <div class="contact-detail-icon">💼</div>
+      <div class="contact-detail-text">
+        <strong>Availability</strong>
+        <span>Open to consulting, guiding, and interim roles</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <form class="contact-form" onsubmit="return false;">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First name</label>
+          <input type="text" placeholder="Marco">
+        </div>
+        <div class="form-group">
+          <label>Last name</label>
+          <input type="text" placeholder="Rossi">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="marco@company.com">
+      </div>
+      <div class="form-group">
+        <label>Subject</label>
+        <input type="text" placeholder="Operations consulting for our property">
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea rows="5" placeholder="Tell me about your project or property..."></textarea>
+      </div>
+      <button class="btn-send" type="submit">Send message</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">2026 Vincenzo Schettino. All rights reserved.</span>
+  <span class="footer-brand">Roots &amp; Routes</span>
+</footer>
+
+</body>
+</html>
